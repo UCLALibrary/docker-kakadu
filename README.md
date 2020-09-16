@@ -77,15 +77,15 @@ This will produce output that looks like:
 
 If the JP2 cannot be read by Kakadu, you will see an error message. These examples assume you're running either Linux or Mac OS. If you're using Windows and don't have a Bash shell available to you, you will need to change the syntax of the command line examples to work on Windows' shell.
 
-### Deploying the Container
+### Publishing the Image
 
-If you're not from UCLA and would like to deploy your Kakadu base image to DockerHub, you can do that by running the Maven `deploy` plugin with the following arguments:
+If you're not from UCLA and would like to publish your Kakadu base image to DockerHub, you can do that by running the Maven `deploy` plugin with the following arguments:
 
     mvn -Ddocker.registry.username=[USERNAME] -Ddocker.registry.password=[PASSWORD] \
      -Ddocker.registry.account=[ACCOUNT] -Dkakadu.version=[YOUR_KAKADU_VERSION] \
      -Dkakadu.git.repo=[YOUR_GITHUB_REPO] deploy
 
-This will deploy your newly built Docker image into your DockerHub account. Make sure the image is marked as private in DockerHub unless you have explicit permission from Kakadu Software to redistribute binaries built from their code.
+This will publish your newly built Docker image into your DockerHub account. Make sure the image is marked as private in DockerHub unless you have explicit permission from Kakadu Software to redistribute binaries built from their code.
 
 ### Additional Things to Know
 
