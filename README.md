@@ -1,21 +1,24 @@
 ## A Docker Image for the Kakadu JPEG-2000 Library
 [![Build Status](https://travis-ci.com/UCLALibrary/docker-kakadu.svg?branch=main)](https://travis-ci.com/UCLALibrary/docker-kakadu) [![Known Vulnerabilities](https://snyk.io/test/github/uclalibrary/docker-kakadu/badge.svg)](https://snyk.io/test/github/uclalibrary/docker-kakadu)
 
-This project builds a Docker image from the Kakadu JPEG-2000 library. Its purpose is to serve as a base for other Docker images. Because Kakadu is proprietary software, we cannot make the base image that we've built available. Anyone should, however, be able to build their own base image with this project and a properly licensed copy of Kakadu's source code.
+This project builds a Docker image from the Kakadu JPEG-2000 library. Its purpose is to serve as a base for other Docker images. Because Kakadu is proprietary software, we cannot make the base image that we've built available. Anyone should, however, be able to build their own base image with this project (and a properly licensed copy of Kakadu's source code).
 
-In order to do this, there needs to be an additional GitHub repo in which the Kakadu source code is kept. At the root of this repository should be the directory in which Kakadu Software distributed their code. This directory will have a name something like v7_A_7-01805E. You also need to have Java, [Docker](https://docs.docker.com/get-docker/), and [Maven](https://maven.apache.org/) installed on your local machine in order to build this project.
+In order to do this, there needs to be an additional GitHub repo in which the Kakadu source code is kept. At the root of this repository should be the directory in which Kakadu Software distributed their code. This directory will have a name something like `v7_A_7-01805E`. You also need to have Java, [Docker](https://docs.docker.com/get-docker/), and [Maven](https://maven.apache.org/) installed on your local machine in order to build this project.
 
 ### Building the Project
 
 To build a Kakadu image, two additional parameters need to be supplied to the Maven build. These are the version of Kakadu that you have (which is the same as the directory name that Kakadu Software has given you) and the location of your Kakadu GitHub repo where this directory lives:
 
-    mvn -Dkakadu.version=v7_A_7-01805E -Dkakadu.git.repo=scm:git:git@github.com:uclalibrary/kakadu.git verify
+    mvn -Dkakadu.version=v7_A_7-01805E \
+     -Dkakadu.git.repo=scm:git:git@github.com:uclalibrary/kakadu.git verify
 
 _We use `verify` instead of `package` because there are tests in the verify stage that will be run against the newly build container to make sure it's built and configured like it should be._
 
-Folks from UCLA should ask someone from the Software Development Services Team for the `kakadu.version` that they should use. The other variable (`kakadu.git.repo`) can be omitted because the project is setup to use UCLA's Kakadu GitHub repository by default. In order to access our GitHub repo, an account on GitHub will be required (and we'll have to give you access to our Kakadu repo).
+### UCLA Specific Instructions
 
-If you'd like to use our pre-built Docker image (which won't require that you have Java or Maven installed on your local machine), an account on [DockerHub](https://hub.docker.com/) is required. Someone from the Services team can give you more information and help you get set up with access.
+Folks from UCLA should ask someone from the Services team for the `kakadu.version` value that they should use. The `kakadu.git.repo` variable can be omitted because the project is set up to use UCLA's Kakadu repository by default. In order to access our private repository, an account on GitHub is required. We'll also have to give that account access to the private Kakadu repository.
+ 
+If you'd like to use our pre-built Docker image (which won't require that you have Java or Maven installed on your local machine), an account on [DockerHub](https://hub.docker.com/) is required. Contact us and we'll be glad to help you get set up with access.
 
 ### Running the Container
 
@@ -43,7 +46,7 @@ This will produce output that looks like:
     Processed using the multi-threaded environment, with
         8 parallel threads of execution
     
-If the image cannot be processed by Kakadu, you will see an error message. You can also use the container to get more information about a JPEG 2000 file. To do this, copy the JP2 image (e.g., test.jp2) into your local directory and run:
+If the image cannot be processed by Kakadu, you will see an error message. You can also use the container to get more information about a JP2 or JPX file. To do this, copy the file (e.g., test.jp2) to your local directory and run:
 
     docker run --rm -v $(pwd):/home/kakadu kakadu test.jp2
 
@@ -78,12 +81,15 @@ If the JP2 cannot be read by Kakadu, you will see an error message. These exampl
 
 If you're not from UCLA and would like to deploy your Kakadu base image to DockerHub, you can do that by running the Maven `deploy` plugin with the following arguments:
 
-    mvn -Ddocker.registry.username=[USERNAME] -Ddocker.registry.password=[PASSWORD] -Ddocker.registry.account=[ACCOUNT] \
-    -Dkakadu.version=[YOUR_KAKADU_VERSION] -Dkakadu.git.repo=[YOUR_GITHUB_REPO] deploy
+    mvn -Ddocker.registry.username=[USERNAME] -Ddocker.registry.password=[PASSWORD] \
+     -Ddocker.registry.account=[ACCOUNT] -Dkakadu.version=[YOUR_KAKADU_VERSION] \
+     -Dkakadu.git.repo=[YOUR_GITHUB_REPO] deploy
 
-This will deploy your newly built Docker image into your DockerHub account. Make sure the image is marked as private in DockerHub unless you have permission from Kakadu Software to redistribute binaries built from their code.
+This will deploy your newly built Docker image into your DockerHub account. Make sure the image is marked as private in DockerHub unless you have explicit permission from Kakadu Software to redistribute binaries built from their code.
 
 ### Additional Things to Know
+
+#### Submodule Warnings
 
 Once you've built the project, you might get the following warning:
 
@@ -104,13 +110,17 @@ Once you've built the project, you might get the following warning:
 
 This is what you want. You do not want to add your Kakadu code as a submodule since the repository is private and should not be linked to this project's code.
 
+#### Using the UCLA Image
+
 If you're from UCLA and using a pre-built Docker image, you will need to include our DockerHub account on the above commands; for instance:
 
     docker run --rm -v $(pwd):/home/kakadu uclalibrary/kakadu test.tif
 
 You will need to have access to that private repository, too, so please contact someone on the Services team to help you get set up on DockerHub.
 
-It is also possible to test an image that is not in your current directory. This can be done in one of two ways: extending the image file path or changing the volume mount point:
+#### Using Image Files in Other Directories
+
+It is also possible to test an image that is not in your current directory. This can be done in one of two ways: by extending the image file path or by changing the volume mount point:
 
     docker run --rm -v $(pwd):/home/kakadu kakadu src/test/resources/images/test.jp2
 
@@ -118,9 +128,13 @@ or
 
     docker run --rm -v $(pwd)/src/test/resources/images/:/home/kakadu kakadu test.jp2
 
-The important thing to remember is that the first value passed to the `-v` argument must be an absolute path. You don't have to use the `$(pwd)` shorthand. A full path can also be passed:
+The important thing to remember is that the first value passed to the `-v` argument must be an absolute path. You don't have to use the `$(pwd)` shorthand... a full path can also be passed:
 
-    docker run --rm -v /home/kevin/docker-kakadu/src/test/resources/images/:/home/kakadu kakadu test.jp2
+    docker run --rm \
+     -v /home/kevin/docker-kakadu/src/test/resources/images/:/home/kakadu \
+     kakadu test.jp2
+
+#### Other Things
 
 That's it. If you encounter any other possible stumbling blocks, please let us know.
 
