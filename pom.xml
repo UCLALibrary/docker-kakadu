@@ -356,10 +356,6 @@
               </build>
             </image>
           </images>
-          <authConfig>
-            <username>${docker.registry.username}</username>
-            <password>${docker.registry.password}</password>
-          </authConfig>
         </configuration>
         <executions>
 
@@ -404,7 +400,7 @@
               <systemPropertyVariables>
                 <kdu.version>${project.version}</kdu.version>
                 <kakadu.version>${kakadu.version}</kakadu.version>
-                <container.tag>${project.artifactId}:${project.version}</container.tag>
+                <container.tag>${docker.registry.account}${project.artifactId}:${project.version}</container.tag>
               </systemPropertyVariables>
             </configuration>
           </execution>
