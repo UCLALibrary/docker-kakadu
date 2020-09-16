@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<!--<![CDATA[
+  To process this file outside of a full build, run: mvn info.freelibrary:freelib-utils:generate-codes
+]]>-->
+
+<properties>
+  <entry key="message-class-name">edu.ucla.library.iiif.kakadu.MessageCodes</entry>
+
+  <!-- Messages to be stored in the MessageCodes class -->
+  <entry key="KDU_000">{}</entry>
+  <entry key="KDU_001">Failed to find: {}</entry>
+</properties>

@@ -1,0 +1,52 @@
+<configuration debug="false">
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+  <timestamp key="byDay" datePattern="yyyy-MM-dd" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${testLogLevel}</level>
+    </filter>
+    <encoder>
+      <pattern>[%level] %logger{45}:%X{line} | %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Loggers for our application -->
+  <logger name="edu.ucla.library.iiif.kakadu" level="DEBUG" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <!-- Loggers for the testcontainers.org tool -->
+  <logger name="org.testcontainers.utility.RegistryAuthLocator" level="ERROR">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="org.testcontainers.dockerclient.DockerClientProviderStrategy" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="org.testcontainers.dockerclient.EnvironmentAndSystemPropertyClientProviderStrategy" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="org.testcontainers.utility.ResourceReaper" level="ERROR">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="🐳 [alpine/socat:latest]" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="🐳 [quay.io/testcontainers/sshd:1.0.0]" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <!-- This is for snapshot builds -->
+  <logger name="🐳 [kakadu:latest]" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <!-- This is for tagged builds -->
+  <logger name="🐳 [kakadu:${project.version}]" level="WARN">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <!-- Default logging level for everything else -->
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>
