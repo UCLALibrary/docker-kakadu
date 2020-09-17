@@ -30,9 +30,9 @@ if [ -z "$1" ]; then
 
   # If we don't have a startup argument, just keep the container running by default
   tail -f /dev/null
-elif [[ "$1" == *.tif ]]; then
+elif [[ "$1" == *.tif || "$1" == *.tiff ]]; then
   kdu_compress -i "$1" -o /tmp/test.jp2
-elif [[ "$1" == *.jp2 || "$1" == "*.jpx" ]]; then
+elif [[ "$1" == *.jp2 || "$1" == *.jpx ]]; then
   kdu_jp2info -i "$1"
 else
   printUsageMessage
