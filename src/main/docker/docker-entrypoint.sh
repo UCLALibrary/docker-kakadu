@@ -12,8 +12,8 @@ function printStartupMessage {
 
 function printUsageMessage {
   echo "Usage:"
-  echo "  docker run --rm --name kdutest -v \$(pwd):/home/kakadu kakadu test.tif"
-  echo "  docker run --rm --name kdutest -v \$(pwd):/home/kakadu kakadu test.jp2"
+  echo "  docker run --rm -v \$(pwd):/home/kakadu kakadu test.tif"
+  echo "  docker run --rm -v \$(pwd):/home/kakadu kakadu test.jp2"
   echo ""
 }
 

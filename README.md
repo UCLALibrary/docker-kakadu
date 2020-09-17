@@ -82,8 +82,8 @@ If the JP2 cannot be read by Kakadu, you will see an error message. These exampl
 If you're not from UCLA and would like to publish your Kakadu base image to DockerHub, you can do that by running the Maven `deploy` plugin with the following arguments:
 
     mvn -Ddocker.registry.username=[USERNAME] -Ddocker.registry.password=[PASSWORD] \
-     -Ddocker.registry.account=[ACCOUNT] -Dkakadu.version=[YOUR_KAKADU_VERSION] \
-     -Dkakadu.git.repo=[YOUR_GITHUB_REPO] deploy
+     -Ddocker.registry.account=[ACCOUNT] -Dkakadu.version=[KAKADU_VERSION] \
+     -Dkakadu.git.repo=[GITHUB_REPO] deploy
 
 This will publish your newly built Docker image into your DockerHub account. Make sure the image is marked as private in DockerHub unless you have explicit permission from Kakadu Software to redistribute binaries built from their code.
 
