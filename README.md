@@ -26,7 +26,13 @@ Running the build above will produce a Docker image. This image can be used as a
 
      docker run --rm -v $(pwd):/home/kakadu kakadu test.tif
 
-This will produce output that looks like:
+Note that if you're at UCLA and using a Docker image from DockerHub, instead of one that you've built yourself, you'll want to use the full name for the uclalibrary/kakadu image:
+
+    docker run --rm -v $(PWD):/home/kakadu uclalibrary/kakadu test.tif
+
+Remember to also take this into consideration for the rest of the command line examples in this README. The rest just assume you have built the container yourself. To modify them to fit your use case, just add the "uclalibrary/" prefix to the kakadu image name.
+
+Running the container through either method above should produce output that looks like:
 
     Note:
         The default rate control policy for colour images employs visual (CSF)
