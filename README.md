@@ -1,5 +1,5 @@
 ## A Docker Image for the Kakadu JPEG-2000 Library
-[![Build Status](https://travis-ci.com/UCLALibrary/docker-kakadu.svg?branch=main)](https://travis-ci.com/UCLALibrary/docker-kakadu) [![Known Vulnerabilities](https://snyk.io/test/github/uclalibrary/docker-kakadu/badge.svg)](https://snyk.io/test/github/uclalibrary/docker-kakadu)
+[![Known Vulnerabilities](https://snyk.io/test/github/uclalibrary/docker-kakadu/badge.svg)](https://snyk.io/test/github/uclalibrary/docker-kakadu)
 
 This project builds a Docker image from the Kakadu JPEG-2000 library. Its purpose is to serve as a base for other Docker images. Because Kakadu is proprietary software, we cannot make the base image that we've built available. Anyone should, however, be able to build their own base image with this project (and a properly licensed copy of Kakadu's source code).
 

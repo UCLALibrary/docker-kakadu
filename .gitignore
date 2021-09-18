@@ -17,3 +17,6 @@ src/test/resources/images/*.gif
 
 # We ignore Maven's build directory
 target/
+
+# And ignore Maven's flattened POM file
+.flattened-pom.xml
