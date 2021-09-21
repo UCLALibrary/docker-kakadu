@@ -1,5 +1,17 @@
 ARG JAVA_HOME_LOCATION="/usr/lib/jvm/java-11-openjdk-amd64"
 
+# We build bucketeer-lite in a different build stage to keep the final container clean
+FROM ubuntu:20.04 AS GOLANG_TOOL_CHAIN
+
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qq --no-install-recommends ca-certificates \
+      golang${golang.version} \
+      git${git.version} && \
+    go get github.com/uclalibrary/bucketeer-lite && \
+    cd ~/go/src/github.com/uclalibrary/bucketeer-lite && \
+    go build && \
+    mkdir /build && mv bucketeer-lite /build ;
+
 # We build Kakadu in a different build stage to keep the final container clean
 FROM ubuntu:20.04 AS KAKADU_TOOL_CHAIN
 
@@ -56,6 +68,9 @@ COPY --from=KAKADU_TOOL_CHAIN /build/kakadu/lib/* /usr/lib/jni/
 # Put our Kakadu bins in the local bin directory
 WORKDIR /usr/local/bin
 COPY --from=KAKADU_TOOL_CHAIN /build/kakadu/bin/* /usr/local/bin/
+
+# Put our bucketeer-lite app in the local bin directory
+COPY --from=GOLANG_TOOL_CHAIN /build/bucketeer-lite /usr/local/bin/
 
 # Set our JAVA_HOME and LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH="/usr/lib/jni:${LD_LIBRARY_PATH}"
