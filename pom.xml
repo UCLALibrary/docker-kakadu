@@ -72,17 +72,15 @@
     <!-- Docker/OS package versions are defined in the default profile at the bottom of the POM file -->
 
     <!-- Java dependency versions -->
-    <freelib.utils.version>1.1.0</freelib.utils.version>
-    <freelib.maven.version>0.1.0</freelib.maven.version>
-    <jsoup.version>1.13.1</jsoup.version>
-    <json.version>20180130</json.version>
-    <scm.plugin.version>1.11.2</scm.plugin.version>
+    <freelib.utils.version>2.4.0</freelib.utils.version>
+    <freelib.maven.version>0.3.0</freelib.maven.version>
+    <jsoup.version>1.14.2</jsoup.version>
+    <scm.plugin.version>1.12.0</scm.plugin.version>
     <deploy.plugin.version>2.8.2</deploy.plugin.version>
-    <codacy.plugin.version>1.2.0</codacy.plugin.version>
-    <testcontainers.version>1.14.3</testcontainers.version>
+    <testcontainers.version>1.16.0</testcontainers.version>
     <xml.maven.plugin.version>1.0.2</xml.maven.plugin.version>
-    <docker.maven.plugin.version>0.33.0</docker.maven.plugin.version>
-    <maven.download.plugin.version>1.3.0</maven.download.plugin.version>
+    <docker.maven.plugin.version>0.37.0</docker.maven.plugin.version>
+    <maven.download.plugin.version>1.6.7</maven.download.plugin.version>
 
     <!-- What level of logging we want to see, by default, in our tests and default container config -->
     <logLevel>ERROR</logLevel>
@@ -243,6 +241,7 @@
           <logViolationsToConsole>true</logViolationsToConsole>
           <violationSeverity>warning</violationSeverity>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <suppressionsLocation>src/test/resources/checkstyle-suppressions-override.xml</suppressionsLocation>
         </configuration>
       </plugin>
 
@@ -264,13 +263,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-
-      <!-- Codacy runs automated code reviews and code analytics -->
-      <plugin>
-        <groupId>com.gavinmogan</groupId>
-        <artifactId>codacy-maven-plugin</artifactId>
-        <version>${codacy.plugin.version}</version>
       </plugin>
 
       <!-- Maven dependency helps freelib-resources copy files into the project -->
@@ -477,11 +469,11 @@
       </activation>
       <properties>
         <!-- What's the latest version? Cf. https://ubuntuupdates.org/package_metas -->
-        <openjdk.version>=11.0.9+11-0ubuntu1~20.04</openjdk.version>
+        <openjdk.version>=11.0.11+9-0ubuntu2~20.04</openjdk.version>
         <gcc.version>=4:9.3.0-1ubuntu2</gcc.version>
         <make.version>=4.2.1-1.2</make.version>
-        <libtiff.version>=4.1.0+git191117-2build1</libtiff.version>
-        <build.essential.version>=12.8ubuntu1</build.essential.version>
+        <libtiff.version>=4.1.0+git191117-2ubuntu0.20.04.1</libtiff.version>
+        <build.essential.version>=12.8ubuntu1.1</build.essential.version>
       </properties>
       <build>
         <plugins>
@@ -536,7 +528,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>4.0.1</version>
+    <version>7.0.1</version>
   </parent>
 
 </project>
